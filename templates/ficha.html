@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha técnica</title>
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    {% include 'navigation.html' %}
+
+    <div class="container-fluid">
+        
+        <div class="row mt-5">
+            <div class="col-md-2">
+                <div class="border-right">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Buscar</h5>
+                        </div>
+                    </div>                   
+                </div>
+
+                </table>
+
+            </div>
+            <div class="col-md-10">
+                <div class="row mt-5">
+                <div class="col-4 text-center" id="grf_1">grf_1</div>        
+                <div class="col-4 text-center" id="grf_2" >grf_2</div>        
+                <div class="col-4 text-center" id="grf_3">grf_3</div>        
+                </div>
+                <div class="row mt-5">
+                    <div class="col-4 text-center" id="grf_4">grf_4</div>        
+                    <div class="col-4 text-center" id="grf_5"> grf_5</div>        
+                    <div class="col-4 text-center" id="grf_6">grf_6</div>        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

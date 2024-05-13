@@ -1,0 +1,59 @@
+.bg_darkblue {background-color: #011530;}
+.bg_gray {background-color: #f1f1f1 !important;}
+.navbar-expand-lg {justify-content: space-between !important;}
+.navbar-nav {font-size: 20px;}
+.custom_hr {height: 8px !important; opacity:1 !important;}
+
+
+
+
+
+
+
+/* Custom Boostrap Button */
+.btn_darkblue { 
+    color: #ffffff; 
+    background-color: #011530; 
+    border-color: #011530; 
+  } 
+   
+  .btn_darkblue:hover, 
+  .btn_darkblue:focus, 
+  .btn_darkblue:active, 
+  .btn_darkblue.active, 
+  .open .dropdown-toggle.btn_darkblue { 
+    color: #ffffff; 
+    background-color: #072854; 
+    border-color: #011530; 
+  } 
+   
+  .btn_darkblue:active, 
+  .btn_darkblue.active, 
+  .open .dropdown-toggle.btn_darkblue { 
+    background-image: none; 
+  } 
+   
+  .btn_darkblue.disabled, 
+  .btn_darkblue[disabled], 
+  fieldset[disabled] .btn_darkblue, 
+  .btn_darkblue.disabled:hover, 
+  .btn_darkblue[disabled]:hover, 
+  fieldset[disabled] .btn_darkblue:hover, 
+  .btn_darkblue.disabled:focus, 
+  .btn_darkblue[disabled]:focus, 
+  fieldset[disabled] .btn_darkblue:focus, 
+  .btn_darkblue.disabled:active, 
+  .btn_darkblue[disabled]:active, 
+  fieldset[disabled] .btn_darkblue:active, 
+  .btn_darkblue.disabled.active, 
+  .btn_darkblue[disabled].active, 
+  fieldset[disabled] .btn_darkblue.active { 
+    background-color: #011530; 
+    border-color: #011530; 
+  } 
+   
+  .btn_darkblue .badge { 
+    color: #011530; 
+    background-color: #ffffff; 
+  }
+/* End Custom Boostrap Button */
