@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del cliente</title>
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    {% include 'navigation.html' %}
+
+    <div class="container-fluid">
+        
+        <div class="row mt-5">
+            <div class="col-md-2">
+                <div class="border-right">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Buscar</h5>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="cliente" class="form-label">Cliente</label>
+                                    <select name="cliente" id="cliente" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha_inicial" class="form-label">Fecha Inicial</label>
+                                    <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" placeholder="yyyy/mm/dd">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha_final" class="form-label">Fecha Final</label>
+                                    <input type="text" class="form-control" id="fecha_final" name="fecha_final" placeholder="yyyy/mm/dd">
+                                </div>
+                                <button type="submit" class="btn btn_darkblue">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <table class="table mt-5 border">
+                    <tbody>
+                        <!-- Add more label-value pairs as needed -->
+                        <tr>
+                            <th class="bg_gray">Sector Económico</th>
+                        </tr>
+                        <tr>
+                            <td id="info_1">Value 1</td>
+                        </tr>
+                        <tr>
+                            <th class="bg_gray">Consumo de energía activa</th>
+                        </tr>
+                        <tr>
+                            <td id="info_2">Value 1</td>
+                        </tr>
+
+                     
+                        
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-10">
+                <div class="row mt-5">
+                <div class="col-4 text-center" id="grf_1">grf_1</div>        
+                <div class="col-4 text-center" id="grf_2" >grf_2</div>        
+                <div class="col-4 text-center" id="grf_3">grf_3</div>        
+                </div>
+                <div class="row mt-5">
+                    <div class="col-4 text-center" id="grf_4">grf_4</div>        
+                    <div class="col-4 text-center" id="grf_5"> grf_5</div>        
+                    <div class="col-4 text-center" id="grf_6">grf_6</div>        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>
