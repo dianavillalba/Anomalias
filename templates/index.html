@@ -13,9 +13,21 @@
 
     <div class="container-fluid">
         <div class="row mt-5">
-            <div class="col-4 text-center" id="grf_1">grf_1</div>        
-            <div class="col-4 text-center" id="grf_2" >grf_2</div>        
-            <div class="col-4 text-center" id="grf_3">grf_3</div>        
+            <div class="col-4 text-center" id="grf_1">
+                {% if graficas is defined %} 
+                <img src="data:image/png; base64, {{ graficas['grafica1'] }}" class ="img-fluid" > 
+                {% endif %} 
+            </div>        
+            <div class="col-4 text-center" id="grf_2">
+                {% if graficas is defined %} 
+                <img src="data:image/png; base64, {{ graficas['grafica2'] }}" class ="img-fluid" > 
+                {% endif %}
+            </div>        
+            <div class="col-4 text-center" id="grf_3">
+                {% if graficas is defined %} 
+                <img src="data:image/png; base64, {{ graficas['grafica3'] }}" class ="img-fluid" > 
+                {% endif %}
+            </div>        
         </div>
         <hr class="custom_hr bg_darkblue mt-5">
         <div class="row mt-5">
@@ -24,14 +36,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Buscar</h5>
-                            <form>
-                                <div class="mb-3">
+                            <form action="/submitform" method="post">
+                                <input type="hidden" value= "{{ current_page }}" name="pagina" id="pagina">
+                                <div class="mb-3"> 
                                     <label for="fecha_inicial" class="form-label">Fecha Inicial</label>
-                                    <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" placeholder="yyyy/mm/dd">
+                                    <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" placeholder="yyyy/mm/dd" 
+                                    {% if form_fields is defined %} value="{{ form_fields['fecha_inicial'] }}" {% endif %} >
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha_final" class="form-label">Fecha Final</label>
-                                    <input type="text" class="form-control" id="fecha_final" name="fecha_final" placeholder="yyyy/mm/dd">
+                                    <input type="text" class="form-control" id="fecha_final" name="fecha_final" placeholder="yyyy/mm/dd" 
+                                    {% if form_fields is defined %} value="{{ form_fields['fecha_final'] }}" {% endif %} >
                                 </div>
                                 <button type="submit" class="btn btn_darkblue">Submit</button>
                             </form>
@@ -43,9 +58,15 @@
             </div>
             <div class="col-md-10">
                 <div class="row mt-5">
-                    <div class="col-4 text-center" id="grf_4">grf_4</div>        
-                    <div class="col-4 text-center" id="grf_5"> grf_5</div>        
-                    <div class="col-4 text-center" id="grf_6">grf_6</div>        
+                    <div class="col-4 text-center" id="grf_4">{% if graficas is defined %} 
+                        <img src="data:image/png; base64, {{ graficas['grafica4'] }}" class ="img-fluid" > 
+                        {% endif %} </div>        
+                    <div class="col-4 text-center" id="grf_5"> {% if graficas is defined %} 
+                        <img src="data:image/png; base64, {{ graficas['grafica5'] }}" class ="img-fluid" > 
+                        {% endif %} </div>        
+                    <div class="col-4 text-center" id="grf_6">{% if graficas is defined %} 
+                        <img src="data:image/png; base64, {{ graficas['grafica6'] }}" class ="img-fluid" > 
+                        {% endif %} </div>        
                 </div>
             </div>
         </div>

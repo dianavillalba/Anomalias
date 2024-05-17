@@ -19,34 +19,43 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Buscar</h5>
-                            <form>
+                            <form action="/submitform" method="post">
+                                <input type="hidden" value= "{{ current_page }}" name="pagina" id="pagina">
                                 <div class="mb-3">
                                     <label for="cliente" class="form-label">Cliente</label>
                                     <select name="cliente" id="cliente" class="form-control">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        {% for client_id in clients %}
+                                        <option value="{{ client_id }}" 
+                                        {% if form_fields is defined and form_fields.get('cliente') == client_id  %} selected = "selected"  {% endif %}
+                                        
+                                        >{{ client_id }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3"> 
                                     <label for="fecha_inicial" class="form-label">Fecha Inicial</label>
-                                    <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" placeholder="yyyy/mm/dd">
+                                    <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" placeholder="yyyy/mm/dd" 
+                                    {% if form_fields is defined %} value="{{ form_fields['fecha_inicial'] }}" {% endif %} >
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha_final" class="form-label">Fecha Final</label>
-                                    <input type="text" class="form-control" id="fecha_final" name="fecha_final" placeholder="yyyy/mm/dd">
-                                </div>          
+                                    <input type="text" class="form-control" id="fecha_final" name="fecha_final" placeholder="yyyy/mm/dd" 
+                                    {% if form_fields is defined %} value="{{ form_fields['fecha_final'] }}" {% endif %} >
+                                </div>
                                 <div class="mb-3">
                                     <label for="nivel_inicial" class="form-label">Nivel Confianza Inicial</label>
-                                    <input type="number" class="form-control" id="nivel_inicial" name="nivel_inicial" min="0" placeholder="Nivel Inicial">
+                                    <input type="number" class="form-control" id="nivel_inicial" name="nivel_inicial" min="0" placeholder="Nivel Inicial"
+                                    {% if form_fields is defined %} value="{{ form_fields['nivel_inicial'] }}" {% endif %} >
                                 </div>                       
                                 <div class="mb-3">
                                     <label for="nivel_final" class="form-label">Nivel Confianza Final</label>
-                                    <input type="number" class="form-control" id="nivel_final" name="nivel_final" min="0" placeholder="Nivel Final">
+                                    <input type="number" class="form-control" id="nivel_final" name="nivel_final" min="0" placeholder="Nivel Final"
+                                    {% if form_fields is defined %} value="{{ form_fields['nivel_final'] }}" {% endif %} >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="num_periodos" class="form-label"># Periodos Pronóstico</label>
-                                    <input type="number" class="form-control" id="num_periodos" name="num_periodos" min="0" max="30" placeholder="# Periodos Pronostico">
+                                    <label for="num_periodos" class="form-label"># Días para Pronóstico</label>
+                                    <input type="number" class="form-control" id="num_periodos" name="num_periodos" min="0" max="30" placeholder="# Periodos Pronostico"
+                                    {% if form_fields is defined %} value="{{ form_fields['nivel_final'] }}" {% endif %} >
                                 </div>
                                 <button type="submit" class="btn btn_darkblue">Submit</button>
                             </form>
@@ -56,30 +65,54 @@
                     
                 </div>
 
-                <table class="table mt-5 border">
-                    <tbody>
-                        <!-- Add more label-value pairs as needed -->
-                        <tr>
-                            <th class="bg_gray">Sector Económico</th>
-                            <td id="info_1">Value 1</td>
-                        </tr>
-                        <tr>
-                            <th class="bg_gray">Consumo de energía activa</th>
-                            <td id="info_2">Value 2</td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-
+                
             </div>
             <div class="col-md-10">
                 <div class="row mt-5">
-                    <div class="col-4 text-center" id="grf_1">grf_1</div>        
-                    <div class="col-4 text-center" id="grf_2" >grf_2</div>             
+                    <div class="col-4 text-center" id="grf_1">
+                        {% if graficas is defined %} 
+                        <img src="data:image/png; base64, {{ graficas['grafica1'] }}" class ="img-fluid" > 
+                        {% endif %} 
+                    </div>        
+                    <div class="col-4 text-center" id="grf_2" > {% if graficas is defined %} 
+                        <img src="data:image/png; base64, {{ graficas['grafica2'] }}" class ="img-fluid" > 
+                        {% endif %} 
+                    </div>        
+                    <div class="row mt-5">
+                        <div class="col-md-4">
+                            {% if listas is defined %}
+                            <div class="box border" id="grf_3">
+                                <p class="text-center font-weight-bold">{{ 'Anomalías Históricas' }}</p>
+                                <p class="text-left">{{ listas['lista1'] | replace('\n', '<br>') | safe }}</p>
+                            </div>
+                            {% endif %} 
+                        </div>
+                        <div class="col-md-4">
+                            {% if listas is defined %}
+                            <div class="box border" id="grf_3">
+                                <p class="text-center font-weight-bold">{{ 'Anomalías Proyectadas' }}</p>
+                                <p class="text-left">{{ listas['lista2'] | replace('\n', '<br>') | safe }}</p>
+                            </div>
+                            {% endif %} 
+                        </div>
+                    </div>                   
+                <div class="row mt-5 justify-content-center ">
+                <div class="col-6">
+                    {% if tabla is defined %} 
+                    <table class="table mt-5 border">
+                        <tbody>
+                            {% for label in tabla['labels'] %}
+                            <tr>
+                                <td class="bg_gray">{{ label }}</td>
+                                <td id="info_1">{{ tabla['valor'][loop.index0] }}</td>
+                            </tr>
+                            {% endfor %}
+                           
+                            
+                        </tbody>
+                    </table>
+                    {% endif %} 
                 </div>
-                <div class="row mt-5">
-                    <div class="col-4 text-center" id="grf_3">grf_3</div>        
-                    <div class="col-4 text-center" id="grf_4"> grf_4</div>        
                 </div>
             </div>
         </div>
