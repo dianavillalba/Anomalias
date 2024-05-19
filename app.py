@@ -25,13 +25,14 @@ def filtrar_cliente(df,id_cliente, fecha_ini, fecha_fin ):
 
     df_cliente = df[df['ID_Cliente'] == id_cliente]
     df_cliente = df_cliente[(df_cliente['Fecha'] >= fecha_ini) & (df_cliente['Fecha'] <= fecha_fin)]
-    df_cliente = df_cliente['tipo'] = 'actual'
+    # Filtrar por el tipo de dato actual o pronostico
+    df_cliente = df_cliente[df_cliente['Tipo'] == 'actual']
     return  df_cliente 
 
 def filtrar_fechas(pagina, df, fecha_ini, fecha_fin ):
 
     df_fechas = df[(df['Fecha'] >= fecha_ini) & (df['Fecha'] <= fecha_fin)]
-
+    df_fechas = df_fechas[df_fechas['Tipo'] == 'actual']    
     return df_fechas 
 
 def obtener_posicion_ranking_anomalias(df, id_cliente, fecha_ini, fecha_fin,tipo):
@@ -240,7 +241,7 @@ def plot_heatmap_energy_by_hour_and_day(df, cliente_id, fecha_inicial, fecha_fin
 def plot_line_time_series(df, cliente_id, fecha_inicial, fecha_final, variable):
 
     df['Fecha'] = pd.to_datetime(df['Fecha'])
-    df_sorted = df.sort_values('Fecha')  # Ordenar el DataFrame por la columna 'Fecha'
+    df_sorted = df.sort_values('Fecha') 
 
     imagenes_base64 = ""
 
@@ -604,6 +605,7 @@ def plot_anomalias_time_series(df, cliente_id, fecha_inicio, fecha_fin,variable)
 
 app = Flask(__name__, static_url_path='/static')
 
+
 @app.context_processor
 def inject_clients():
     # Define the variable you want to make available in the templates
@@ -633,7 +635,9 @@ def anomalias():
 def ficha():
     return render_template('ficha.html', current_page='ficha', current_date=current_date)
 
+
 @app.route('/submitform', methods=['POST'])
+
 def submit_form():
     if request.method == 'POST':
         # Get form data
@@ -651,14 +655,18 @@ def submit_form():
 
         if pagina == "index":
             
-           df_fecha = filtrar_fechas(pagina, df, fecha_inicial, fecha_final)
            
-           graficas['grafica1'] = plot_clientes_yoy_variance(df_fecha, '2021-01-01', '2023-03-31')
-           graficas['grafica2'] = plot_total_and_yoy_variance_by_year(df_fecha, '2021-01-01', '2023-03-31' ,"Active_energy")
-           graficas['grafica3'] = plot_total_and_yoy_variance_by_year(df_fecha, '2021-01-01', '2023-03-31' ,"Reactive_energy")
-           graficas['grafica4'] = plot_treemap_sector_clientes(df_fecha, fecha_inicial,fecha_final)
-           graficas['grafica5'] = plot_waterfall_anomalias(df_fecha, fecha_inicial,fecha_final)
-           graficas['grafica6'] = plot_top_anomaly_clients(df_fecha, fecha_inicial,fecha_final)
+           
+           graficas['grafica1'] = plot_clientes_yoy_variance(df, '2021-01-01', '2023-03-31')
+           graficas['grafica2'] = plot_total_and_yoy_variance_by_year(df, '2021-01-01', '2023-03-31' ,"Active_energy")
+           graficas['grafica3'] = plot_total_and_yoy_variance_by_year(df, '2021-01-01', '2023-03-31' ,"Reactive_energy")
+        
+           if fecha_inicial != "" and fecha_final!= "":
+                print ("dates are good")
+                df_fecha = filtrar_fechas(pagina, df, fecha_inicial, fecha_final)
+                graficas['grafica4'] = plot_treemap_sector_clientes(df_fecha, fecha_inicial,fecha_final)
+                graficas['grafica5'] = plot_waterfall_anomalias(df_fecha, fecha_inicial,fecha_final)
+                graficas['grafica6'] = plot_top_anomaly_clients(df_fecha, fecha_inicial,fecha_final)
 
         elif pagina == "perfil":
       
@@ -678,6 +686,14 @@ def submit_form():
             id_cliente = request.form['cliente']
             df_cliente = filtrar_cliente(df,id_cliente, fecha_inicial, fecha_final)
             tabla['labels'], tabla['valor']= info_anomalias(pagina, df, id_cliente, fecha_inicial, fecha_final)
+
+
+            nivel_inicial = request.form['nivel_inicial']
+            nivel_final = request.form['nivel_final']
+            num_periodos = request.form['num_periodos']
+         
+
+            print(f'nivel_inicial : {nivel_inicial} nivel_final {nivel_final} periodos {num_periodos}')
 
             graficas['grafica1'] = plot_anomalias_time_series(df_cliente,id_cliente, fecha_inicial, fecha_final, "Active_energy")
             graficas['grafica2'] = plot_anomalias_time_series(df_cliente,id_cliente, fecha_inicial, fecha_final, "Reactive_energy")

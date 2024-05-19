@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deteccion de Anomalias</title>
-    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-
-</head>
+{% include 'header.html' %}
 <body>
     {% include 'navigation.html' %}
 
@@ -19,7 +11,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Buscar</h5>
-                            <form action="/submitform" method="post">
+                            <p class="error text-danger"></p>
+                            <form action="/submitform" method="post" name="form" id="form">
                                 <input type="hidden" value= "{{ current_page }}" name="pagina" id="pagina">
                                 <div class="mb-3">
                                     <label for="cliente" class="form-label">Cliente</label>
@@ -43,19 +36,21 @@
                                     {% if form_fields is defined %} value="{{ form_fields['fecha_final'] }}" {% endif %} >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="nivel_inicial" class="form-label">Nivel Confianza Inicial</label>
-                                    <input type="number" class="form-control" id="nivel_inicial" name="nivel_inicial" min="0" placeholder="Nivel Inicial"
-                                    {% if form_fields is defined %} value="{{ form_fields['nivel_inicial'] }}" {% endif %} >
-                                </div>                       
+                                    <label for="nivel_inicial" class="form-label">Nivel Confianza Inicial (%)</label>
+                                    <input type="range" class="form-range" id="nivel_inicial_range" name="nivel_inicial" min="0" max="100" step="1"
+                                    {% if form_fields is defined %} value="{{ form_fields['nivel_inicial'] }}" {% endif %} oninput="nivel_inicial_output.value = nivel_inicial_range.value">
+                                    <input type="text" class="form-control mt-2" id="nivel_inicial_output" readonly value="0%">
+                                </div>
                                 <div class="mb-3">
-                                    <label for="nivel_final" class="form-label">Nivel Confianza Final</label>
-                                    <input type="number" class="form-control" id="nivel_final" name="nivel_final" min="0" placeholder="Nivel Final"
-                                    {% if form_fields is defined %} value="{{ form_fields['nivel_final'] }}" {% endif %} >
+                                    <label for="nivel_final" class="form-label">Nivel Confianza Final (%)</label>
+                                    <input type="range" class="form-range" id="nivel_final_range" name="nivel_final" min="0" max="100" step="1"
+                                    {% if form_fields is defined %} value="{{ form_fields['nivel_final'] }}" {% endif %} oninput="nivel_final_output.value = nivel_final_range.value">
+                                    <input type="text" class="form-control mt-2" id="nivel_final_output" readonly value="0%">
                                 </div>
                                 <div class="mb-3">
                                     <label for="num_periodos" class="form-label"># Días para Pronóstico</label>
-                                    <input type="number" class="form-control" id="num_periodos" name="num_periodos" min="0" max="30" placeholder="# Periodos Pronostico"
-                                    {% if form_fields is defined %} value="{{ form_fields['nivel_final'] }}" {% endif %} >
+                                    <input type="number" class="form-control" id="num_periodos" name="num_periodos" min="1" max="30" placeholder="# Periodos Pronostico"
+                                    {% if form_fields is defined %} value="{{ form_fields['num_periodos'] }}" {% endif %} >
                                 </div>
                                 <button type="submit" class="btn btn_darkblue">Submit</button>
                             </form>
@@ -81,7 +76,7 @@
                     <div class="row mt-5">
                         <div class="col-md-4">
                             {% if listas is defined %}
-                            <div class="box border" id="grf_3">
+                            <div class="box border p-2" id="grf_3">
                                 <p class="text-center font-weight-bold">{{ 'Anomalías Históricas' }}</p>
                                 <p class="text-left">{{ listas['lista1'] | replace('\n', '<br>') | safe }}</p>
                             </div>
@@ -89,7 +84,7 @@
                         </div>
                         <div class="col-md-4">
                             {% if listas is defined %}
-                            <div class="box border" id="grf_3">
+                            <div class="box border p-2" id="grf_3">
                                 <p class="text-center font-weight-bold">{{ 'Anomalías Proyectadas' }}</p>
                                 <p class="text-left">{{ listas['lista2'] | replace('\n', '<br>') | safe }}</p>
                             </div>
@@ -120,4 +115,30 @@
 
     {% include 'footer.html' %}
 </body>
+<script>
+    // Set the initial values for the outputs if they are defined in form_fields
+    document.addEventListener("DOMContentLoaded", function() {
+        const nivelInicialRange = document.getElementById('nivel_inicial_range');
+        const nivelInicialOutput = document.getElementById('nivel_inicial_output');
+        const nivelFinalRange = document.getElementById('nivel_final_range');
+        const nivelFinalOutput = document.getElementById('nivel_final_output');
+
+        if (nivelInicialRange.value) {
+            nivelInicialOutput.value = nivelInicialRange.value + "%";
+        }
+
+        if (nivelFinalRange.value) {
+            nivelFinalOutput.value = nivelFinalRange.value + "%";
+        }
+    });
+
+    // Update output values when the ranges change
+    document.getElementById('nivel_inicial_range').addEventListener('input', function() {
+        document.getElementById('nivel_inicial_output').value = this.value + "%";
+    });
+
+    document.getElementById('nivel_final_range').addEventListener('input', function() {
+        document.getElementById('nivel_final_output').value = this.value + "%";
+    });
+</script>
 </html>
