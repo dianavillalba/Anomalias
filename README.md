@@ -1,8 +1,8 @@
-<table>
+<table style="border-collapse: collapse;">
   <tr>
-    <td><img src="static/img/miad.png" alt="Miad Logo" width="100"/></td>
-    <td><h1 align="center">Sistema de Detección de Anomalías</h1></td>
-    <td><img src="static/img/electrodunas.png" alt="Electro Dunas Logo" width="100"/></td>
+    <td style="border: none;"><img src="static/img/miad.png" alt="Miad Logo" width="100"/></td>
+    <td style="border: none;"><h1 align="center">Sistema de Detección de Anomalías</h1></td>
+    <td style="border: none;"><img src="static/img/electrodunas.png" alt="Electro Dunas Logo" width="100"/></td>
   </tr>
 </table>
 
