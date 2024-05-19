@@ -55,8 +55,9 @@ El tablero de control tiene como objetivo el análisis y detección de anomalía
 ### Niveles
 Cuatro carpetas principales
 - informes: Prototipo Fachada, Tabla se requerimientos, Desarrollo y Prueba de los Modelos, Validación del prototipo con base en los requerimientos y Manual de Usuario
-- img (Imagenes relacionadas en el documento)
-- src (Codigo .ipynb)
+- src: Jupyter Notebooks
+- satatics: Imagenes, versión minimizada del archivo de CSS de Bootstrap, versión minimizada del archivo JavaScript de jQuery, archivo JavaScript personalizado y archivo CSS personalizado
+- templates: Plantilas Html de cada pagina
 
 ### Ejecución
 Puedes ejecutar el codigo desde sitios como (Google Colab, Jupiter Notebook o VSC)
