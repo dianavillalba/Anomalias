@@ -10,7 +10,7 @@ MIAD Proyecto aplicado en analítica de datos
 - [Características](#características)
   - [Datos utilizados](#datos-utilizados)
   - [Metodología – Modelos](#metodología--modelos)
-  - [Interactividad y Funcionalidades](#interactividad-y-funcionalidades)
+  - [Interactividad y Funcionalidad](#interactividad-y-funcionalidad)
   
 - [Repositorio](#repositorio)
   - [Niveles](#niveles)
@@ -45,19 +45,18 @@ El tablero de control tiene como objetivo el análisis y detección de anomalía
 *	Predicción consumo: SVR (Support Vector Regression) y LSTM (Long Short-Term Memory)
 *	Clasificación anomalías futuras: Random Forest y Gradient Boosting
 
-### Interactividad y Funcionalidades
+### Interactividad y Funcionalidad
 *	Filtros Dinámicos: Permiten explorar y segmentar los datos según diferentes criterios tales como el sector económico, intervalo de tiempo (fecha inicio y fecha fin), ID cliente, nivel de confianza del pronóstico y periodo de pronostico
 *	Alertas de Anomalías: Notificaciones visuales cuando se detectan patrones de consumo atípicos tanto a nivel histórico como patrones futuros.
 *	Cuadro resumen con la información de las anomalías detectadas según el periodo seleccionado con la información del registro exacto y su desviación.
-*	
-
+  
 ## Repositorio
 
 ### Niveles
-Contamos con 3 carpetas principales
-- data (Insumos principales .csv)
+Cuatro carpetas principales
+- informes: Prototipo Fachada, Tabla se requerimientos, Desarrollo y Prueba de los Modelos, Validación del prototipo con base en los requerimientos y Manual de Usuario
 - img (Imagenes relacionadas en el documento)
-- scripts (Codigo .ipynb)
+- src (Codigo .ipynb)
 
 ### Ejecución
 Puedes ejecutar el codigo desde sitios como (Google Colab, Jupiter Notebook o VSC)
