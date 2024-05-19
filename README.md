@@ -1,7 +1,7 @@
 <table style="border-collapse: collapse; margin: 0 auto;">
-  <tr style="border: none;">
-    <td colspan="3" style="border: none; padding-left: 30px;">
-      <h3>Proyecto aplicado en analítica de datos</h3>
+  <tr style="border: none; height: 25px;">
+    <td colspan="3" style="border: none;">
+      <h3 align="center" >Proyecto aplicado en analítica de datos</h3>
     </td>
   </tr>
   <tr style="border: none;">
@@ -10,7 +10,6 @@
     <td style="border: none;"><img src="static/img/electrodunas.png" alt="Electro Dunas Logo" width="100"/></td>
   </tr>
 </table>
-
 
 ## Tabla de Contenido
 
