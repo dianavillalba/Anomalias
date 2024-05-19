@@ -1,46 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha técnica</title>
-    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-
-</head>
+{% include 'header.html' %}
 <body>
     {% include 'navigation.html' %}
 
-    <div class="container-fluid">
-        
-        <div class="row mt-5">
-            <div class="col-md-2">
-                <div class="border-right">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Buscar</h5>
-                        </div>
-                    </div>                   
-                </div>
-
-                </table>
-
-            </div>
-            <div class="col-md-10">
-                <div class="row mt-5">
-                <div class="col-4 text-center" id="grf_1">grf_1</div>        
-                <div class="col-4 text-center" id="grf_2" >grf_2</div>        
-                <div class="col-4 text-center" id="grf_3">grf_3</div>        
-                </div>
-                <div class="row mt-5">
-                    <div class="col-4 text-center" id="grf_4">grf_4</div>        
-                    <div class="col-4 text-center" id="grf_5"> grf_5</div>        
-                    <div class="col-4 text-center" id="grf_6">grf_6</div>        
-                </div>
+    <div class="container my-5">
+        <div class="card">
+            <div class="card-body">
+                <h5>Objetivo:</h5>
+                <p>
+                    El tablero de control tiene como objetivo el análisis y detección de anomalías en el comportamiento del consumo de energía de los clientes no regulados propios y terceros de ElectroDunas. Esta herramienta facilita la visualización del consumo histórico, la detección de anomalías y la predicción de comportamientos futuros, permitiendo una gestión más eficiente y proactiva del suministro eléctrico.
+                </p>
+                <h5>Datos utilizados:</h5>
+                <ul>
+                    <li>Periodo disponible: Desde el 1 de enero de 2021 hasta el 1 de abril de 2023.</li>
+                    <li>Variables: Energía activa (kWh), energía reactiva (kVarh), Sector económico e ID cliente.</li>
+                    <li>Cantidad de clientes: 15 clientes analizados con alta completitud de datos (≥ 99%).</li>
+                </ul>
+                <h5>Metodología y Modelos:</h5>
+                <ul>
+                    <li>Detección de anomalías: implementación de modelos no supervisados y series de tiempo tales como DBSCAN y KernelCPD.</li>
+                    <li>Predicción consumo: SVR (Support Vector Regression) y LSTM (Long Short-Term Memory).</li>
+                    <li>Clasificación anomalías futuras: Random Forest y Gradient Boosting.</li>
+                </ul>
+                <h5>Interactividad y Funcionalidades:</h5>
+                <ul>
+                    <li>Filtros Dinámicos: Permiten explorar y segmentar los datos según diferentes criterios tales como el sector económico, intervalo de tiempo (fecha inicio y fecha fin), ID cliente, nivel de confianza del pronóstico y periodo de pronóstico.</li>
+                    <li>Alertas de Anomalías: Notificaciones visuales cuando se detectan patrones de consumo atípicos tanto a nivel histórico como patrones futuros.</li>
+                    <li>Cuadro resumen con la información de las anomalías detectadas según el periodo seleccionado con la información del registro exacto y su desviación.</li>
+                </ul>
+                <h5>Requerimientos Técnicos:</h5>
+                <ul>
+                    <li>Backend: Flask, Python.</li>
+                    <li>Frontend: Dash y Bootstrap.</li>
+                    <li>Modelos Analíticos: Scikit-learn, TensorFlow.</li>
+                </ul>
+                <h5>Área encargada:</h5>
+                <p>Operaciones</p>
+                <h5>Elaboración e implementación:</h5>
+                <ul>
+                    <li>Diana Villalba (diana.villalba@uniandes.edu.co)</li>
+                    <li>Santiago Pachon (n.pachonr@uniandes.edu.co)</li>
+                    <li>Andrés Felipe Valencia (af.valenciac@uniandes.edu.co)</li>
+                </ul>
             </div>
         </div>
     </div>
-
+    
+    
     {% include 'footer.html' %}
 </body>
 </html>
