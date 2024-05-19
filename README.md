@@ -18,7 +18,7 @@ MIAD Proyecto aplicado en analítica de datos
 
 ## Introducción
 ### Pregunta de negocio
-?????
+
 <br>
 <br>
 ### Motivación
@@ -52,21 +52,31 @@ una vez tengas la versión nesesaria installa las siguientes dependencias como s
 ```
 Apartir de acá ya puedes ejecutar el notebook y probar la aplicación
 
-## Características
-?????
+## Características del tablero de control
 
-## ¿Como funciona?
-????
+El tablero de control tiene como objetivo el análisis y detección de anomalías en el comportamiento del consumo de energía de los clientes no regulados propios y terceros de ElectroDunas. Esta herramienta facilita la visualización del consumo histórico, la detección de anomalías y la predicción de comportamientos futuros, permitiendo una gestión más eficiente y proactiva del suministro eléctrico.
 
-### Diagrama de proceso
-<p align="center">
-  <img src="./img/img3.png" alt="Size Limit CLI" width="738">
-</p>
+### Datos utilizados:
+*	Periodo disponible: Desde el 1 de enero de 2021 hasta el 1 de abril de 2023.
+*	Variables: Energía activa (kWh), energía reactiva (kVarh), Sector económico e ID cliente.
+*	Cantidad de clientes: 15 clientes analizados con alta completitud de datos (≥ 99%).
 
-## Requerimientos
+### Metodología – Modelos
+*	Detección de anomalías: implementación de modelos no supervisados y series de tiempo tales como DBSCAN y KernelCPD.
+*	Predicción consumo: SVR (Support Vector Regression) y LSTM (Long Short-Term Memory)
+*	Clasificación anomalías futuras: Random Forest y Gradient Boosting
+
+### Interactividad y Funcionalidades
+*	Filtros Dinámicos: Permiten explorar y segmentar los datos según diferentes criterios tales como el sector económico, intervalo de tiempo (fecha inicio y fecha fin), ID cliente, nivel de confianza del pronóstico y periodo de pronostico
+*	Alertas de Anomalías: Notificaciones visuales cuando se detectan patrones de consumo atípicos tanto a nivel histórico como patrones futuros.
+*	Cuadro resumen con la información de las anomalías detectadas según el periodo seleccionado con la información del registro exacto y su desviación.
+
+## Requerimientos Técnicos
 * Linux or macOS or Windows
-* Bash for Windows (`git bash` should suffice)
-* version > python 3.5
+* bash
+* * version > python 3.5
+* Frontend: Dash y Bootstrap
+* Modelos Analíticos: Scikit-learn, TensorFlow
 
 ## Referencias
 Banik, S., Saha, S. K., Banik, T., & Hossain, S. M. M. (2023). Anomaly Detection Techniques in Smart Grid Systems: A Review (arXiv:2306.02473). arXiv. http://arxiv.org/abs/2306.02473 
