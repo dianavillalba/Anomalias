@@ -1,6 +1,7 @@
-Proyecto aplicado en analítica de datos
-
 <table style="border-collapse: collapse;">
+  <tr style="border: none;">
+    <td colspan="3" style="border: none; text-align: center;"><h3>Proyecto aplicado en analítica de datos</h3></td>
+  </tr>
   <tr style="border: none;">
     <td style="border: none;"><img src="static/img/miad.png" alt="Miad Logo" width="100"/></td>
     <td style="border: none;"><h1 align="center">Sistema de Detección de Anomalías </h1></td>
@@ -87,7 +88,7 @@ Apartir de acá ya puedes ejecutar el notebook y probar la aplicación
 ## Requerimientos Técnicos
 * Linux or macOS or Windows
 * bash
-* * version > python 3.5
+* version > python 3.5
 * Frontend: Dash y Bootstrap
 * Modelos Analíticos: Scikit-learn, TensorFlow
 
