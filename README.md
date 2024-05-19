@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="static/img/miad.png" alt="Miad Logo" width="100"/>
+  <h1 align="center">Sistema de Detección de Anomalías</h1>
+  <img src="static/img/electrodunas.png" alt="Electro Dunas Logo" width="100"/>
+</p>
+
 # Sistema de Deteccion de Anomalias 
 MIAD Proyecto aplicado en analítica de datos
 
