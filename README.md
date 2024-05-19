@@ -1,6 +1,8 @@
 <table style="border-collapse: collapse; margin: 0 auto;">
   <tr style="border: none;">
-    <td colspan="3" style="border: none; text-align: center;"><h3>Proyecto aplicado en analítica de datos</h3></td>
+    <td colspan="3" style="border: none; padding-left: 30px;">
+      <h3>Proyecto aplicado en analítica de datos</h3>
+    </td>
   </tr>
   <tr style="border: none;">
     <td style="border: none;"><img src="static/img/miad.png" alt="Miad Logo" width="100"/></td>
@@ -8,6 +10,7 @@
     <td style="border: none;"><img src="static/img/electrodunas.png" alt="Electro Dunas Logo" width="100"/></td>
   </tr>
 </table>
+
 
 ## Tabla de Contenido
 
