@@ -1,13 +1,13 @@
 <table style="border-collapse: collapse; margin: 0 auto;">
-  <tr style="border: none; height: 25px;">
-    <td colspan="3" style="border: none;">
-      <h3 align="center" >Proyecto aplicado en analítica de datos</h3>
-    </td>
-  </tr>
   <tr style="border: none;">
     <td style="border: none;"><img src="static/img/miad.png" alt="Miad Logo" width="100"/></td>
     <td style="border: none;"><h1 align="center">Sistema de Detección de Anomalías </h1></td>
     <td style="border: none;"><img src="static/img/electrodunas.png" alt="Electro Dunas Logo" width="100"/></td>
+  </tr>
+  <tr style="border: none; ">
+    <td colspan="3" style="border: none;">
+      <h3 align="center" >Proyecto aplicado en analítica de datos <br> Santiago Pachon Rincon - Andrés Felipe Valencia - Diana Villalba Leal </h3>
+     </td>
   </tr>
 </table>
 
