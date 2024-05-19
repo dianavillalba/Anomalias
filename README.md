@@ -13,10 +13,20 @@ MIAD Proyecto aplicado en analítica de datos
 - [Características](#Características)
 - [¿Como funciona?](#¿Como-funciona?)
     - [Diagrama de proceso](#Diagrama-de-proceso)
-- [Requerimientos](#Requerimientos)
-- [Artículos](#Artículos)
+- [Requerimientos Técnicos](#Requerimientos Técnicos)
+- [Referecencias](# Referencias)
 
 ## Introducción
+
+### Contexto  
+
+Electro Dunas, empresa peruana especializada en distribución de energía eléctrica, opera en las provincias de Ica, Huancavelica y Ayacucho, abarcando 5,402 km2 y atendiendo a 264,480. Desde su integración al Grupo Energía Bogotá en agosto de 2019, pertenece a un conglomerado líder en energía y gas natural en Colombia, Perú y Brasil. El GEB, comprometido con generar valor, bienestar comunitario y sostenibilidad ambiental, refleja la visión y enfoque de Electro Dunas. 
+La empresa se desenvuelve en dos segmentos de mercado: el regulado y el de competencia. Este último se compone de clientes libres, tanto propios como terceros. A los clientes libres propios se les facturan los precios de generación según sus acuerdos contractuales, además de los cargos regulados por transmisión. Por otro lado, los clientes terceros son facturados de acuerdo con los cargos regulados por transmisión y/o distribución, en función de la utilización que hagan del sistema eléctrico de Electro Dunas. 
+
+### Planteamiento del problema de Negocio 
+Con un crecimiento significativo de clientes no regulados, la empresa se propone utilizar analítica de datos para identificar posibles anomalías en el comportamiento de sus clientes no regulados. El proyecto se enfoca en desarrollar un Producto Mínimo Viable (PMV) que visualice datos históricos, resuma comportamientos, identifique anomalías y proporcione alertas, con el objetivo de ser adoptado como una herramienta eficaz en los flujos operativos de Electro Dunas. 
+
+
 ### Pregunta de negocio
 
 <br>
@@ -29,6 +39,7 @@ MIAD Proyecto aplicado en analítica de datos
 </p>
 
 ## Repositorio
+
 ### Niveles
 Contamos con 3 carpetas principales
 - data (Insumos principales .csv)
