@@ -23,7 +23,7 @@
   - [Interactividad y Funcionalidad](#interactividad-y-funcionalidad)
   
 - [Repositorio](#repositorio)
-  - [Niveles](#niveles)
+  - [Carpetas](#carpetas)
   - [Ejecución](#ejecución)
   
 - [Requerimientos Técnicos](#requerimientos-técnicos)
@@ -62,8 +62,7 @@ El tablero de control tiene como objetivo el análisis y detección de anomalía
   
 ## Repositorio
 
-### Niveles
-Cuatro carpetas principales
+### Carpetas
 - informes: Prototipo Fachada, Tabla se requerimientos, Desarrollo y Prueba de los Modelos, Validación del prototipo con base en los requerimientos y Manual de Usuario
 - src: Jupyter Notebooks
 - satatics: Imagenes, versión minimizada del archivo de CSS de Bootstrap, versión minimizada del archivo JavaScript de jQuery, archivo JavaScript personalizado y archivo CSS personalizado
