@@ -1,20 +1,24 @@
-# Anomalias
+# Sistema de Deteccion de Anomalias 
 MIAD Proyecto aplicado en analítica de datos
-
 
 ## Tabla de Contenido
 
-- [Introducción](#Introducción)
-    - [Pregunta de negocio](#Pregunta-de-negocio)
-    - [Motivación](#Motivación)
-- [Repositorio](#Repositorio)
-    - [Niveles](#Niveles)
-    - [Ejecución](#Ejecución)
-- [Características](#Características)
-- [¿Como funciona?](#¿Como-funciona?)
-    - [Diagrama de proceso](#Diagrama-de-proceso)
-- [Requerimientos Técnicos](#Requerimientos Técnicos)
-- [Referecencias](# Referencias)
+- [Introducción](#introducción)
+  - [Contexto](#contexto)
+  - [Planteamiento del problema de Negocio](#planteamiento-del-problema-de-negocio)
+  
+- [Características](#características)
+  - [Datos utilizados](#datos-utilizados)
+  - [Metodología – Modelos](#metodología--modelos)
+  - [Interactividad y Funcionalidades](#interactividad-y-funcionalidades)
+  
+- [Repositorio](#repositorio)
+  - [Niveles](#niveles)
+  - [Ejecución](#ejecución)
+  
+- [Requerimientos Técnicos](#requerimientos-técnicos)
+  
+- [Referencias](#referencias)
 
 ## Introducción
 
@@ -27,16 +31,25 @@ La empresa se desenvuelve en dos segmentos de mercado: el regulado y el de compe
 Con un crecimiento significativo de clientes no regulados, la empresa se propone utilizar analítica de datos para identificar posibles anomalías en el comportamiento de sus clientes no regulados. El proyecto se enfoca en desarrollar un Producto Mínimo Viable (PMV) que visualice datos históricos, resuma comportamientos, identifique anomalías y proporcione alertas, con el objetivo de ser adoptado como una herramienta eficaz en los flujos operativos de Electro Dunas. 
 
 
-### Pregunta de negocio
+## Características
 
-<br>
-<br>
-### Motivación
-???
+El tablero de control tiene como objetivo el análisis y detección de anomalías en el comportamiento del consumo de energía de los clientes no regulados propios y terceros de ElectroDunas. Esta herramienta facilita la visualización del consumo histórico, la detección de anomalías y la predicción de comportamientos futuros, permitiendo una gestión más eficiente y proactiva del suministro eléctrico.
 
-<p align="center">
-  <img src="./img/img2.png" alt="Size Limit CLI" width="738">
-</p>
+### Datos utilizados:
+*	Periodo disponible: Desde el 1 de enero de 2021 hasta el 1 de abril de 2023.
+*	Variables: Energía activa (kWh), energía reactiva (kVarh), Sector económico e ID cliente.
+*	Cantidad de clientes: 15 clientes analizados con alta completitud de datos (≥ 99%).
+
+### Metodología – Modelos
+*	Detección de anomalías: implementación de modelos no supervisados y series de tiempo tales como DBSCAN y KernelCPD.
+*	Predicción consumo: SVR (Support Vector Regression) y LSTM (Long Short-Term Memory)
+*	Clasificación anomalías futuras: Random Forest y Gradient Boosting
+
+### Interactividad y Funcionalidades
+*	Filtros Dinámicos: Permiten explorar y segmentar los datos según diferentes criterios tales como el sector económico, intervalo de tiempo (fecha inicio y fecha fin), ID cliente, nivel de confianza del pronóstico y periodo de pronostico
+*	Alertas de Anomalías: Notificaciones visuales cuando se detectan patrones de consumo atípicos tanto a nivel histórico como patrones futuros.
+*	Cuadro resumen con la información de las anomalías detectadas según el periodo seleccionado con la información del registro exacto y su desviación.
+*	
 
 ## Repositorio
 
@@ -63,24 +76,6 @@ una vez tengas la versión nesesaria installa las siguientes dependencias como s
 ```
 Apartir de acá ya puedes ejecutar el notebook y probar la aplicación
 
-## Características del tablero de control
-
-El tablero de control tiene como objetivo el análisis y detección de anomalías en el comportamiento del consumo de energía de los clientes no regulados propios y terceros de ElectroDunas. Esta herramienta facilita la visualización del consumo histórico, la detección de anomalías y la predicción de comportamientos futuros, permitiendo una gestión más eficiente y proactiva del suministro eléctrico.
-
-### Datos utilizados:
-*	Periodo disponible: Desde el 1 de enero de 2021 hasta el 1 de abril de 2023.
-*	Variables: Energía activa (kWh), energía reactiva (kVarh), Sector económico e ID cliente.
-*	Cantidad de clientes: 15 clientes analizados con alta completitud de datos (≥ 99%).
-
-### Metodología – Modelos
-*	Detección de anomalías: implementación de modelos no supervisados y series de tiempo tales como DBSCAN y KernelCPD.
-*	Predicción consumo: SVR (Support Vector Regression) y LSTM (Long Short-Term Memory)
-*	Clasificación anomalías futuras: Random Forest y Gradient Boosting
-
-### Interactividad y Funcionalidades
-*	Filtros Dinámicos: Permiten explorar y segmentar los datos según diferentes criterios tales como el sector económico, intervalo de tiempo (fecha inicio y fecha fin), ID cliente, nivel de confianza del pronóstico y periodo de pronostico
-*	Alertas de Anomalías: Notificaciones visuales cuando se detectan patrones de consumo atípicos tanto a nivel histórico como patrones futuros.
-*	Cuadro resumen con la información de las anomalías detectadas según el periodo seleccionado con la información del registro exacto y su desviación.
 
 ## Requerimientos Técnicos
 * Linux or macOS or Windows
