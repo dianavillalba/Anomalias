@@ -6,7 +6,7 @@
   </tr>
   <tr style="border: none; ">
     <td colspan="3" style="border: none;">
-      <h3 align="center" >Proyecto aplicado en analítica de datos <br> Santiago Pachon Rincon - Andrés Felipe Valencia - Diana Villalba Leal </h3>
+      <h3 align="center" >Proyecto aplicado en analítica de datos <br> Santiago Pachon Rincón - Andrés Felipe Valencia - Diana Villalba Leal </h3>
      </td>
   </tr>
 </table>
