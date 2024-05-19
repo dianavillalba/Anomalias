@@ -1,4 +1,4 @@
-<table style="border-collapse: collapse;">
+<table style="border-collapse: collapse; margin: 0 auto;">
   <tr style="border: none;">
     <td colspan="3" style="border: none; text-align: center;"><h3>Proyecto aplicado en analítica de datos</h3></td>
   </tr>
