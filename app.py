@@ -12,14 +12,32 @@ import squarify
 import matplotlib.ticker as ticker
 import textwrap
 
-df = pd.read_excel('clientes_anomalias.xlsx')
+#df = pd.read_excel('clientes_anomalias.xlsx')
+df_sector = pd.read_excel('sector_economico_clientes.xlsx')
+df = pd.read_csv('df_final_pronostico.csv', sep=';')
+
+df = df.merge(df_sector, left_on='ID_Cliente', right_on='Cliente:', how='left')
+df.loc[df['Sector'].isna(), 'Sector'] = df['Sector Económico:']
+df.drop(columns='Cliente:', inplace=True)
+df.drop(columns='Sector Económico:', inplace=True)
+
+
 df['Fecha'] = pd.to_datetime(df['Fecha'])
 df['Año'] = df['Fecha'].dt.year
 df['Mes'] = df['Fecha'].dt.month
 df['Dia_Semana'] = df['Fecha'].dt.day_name()
 df['Hora'] = df['Fecha'].dt.hour
 
+df.loc[df['key'].isna(), 'key'] = df.index[df['key'].isna()]
+df['key'] = df['key'].astype(int)
+
+columns_to_convert = ['Archivo', 'ID_Cliente', 'Sector', 'Tipo']
+df[columns_to_convert] = df[columns_to_convert].astype(str)
+
+#print(f'df info: {df.info()}')
 print(f'Datos Cargados: {df.shape}')
+#print(f' {df.head(10)}')
+#print(f' {df.tail(10)}')
 
 def filtrar_cliente(df,id_cliente, fecha_ini, fecha_fin ):
 
@@ -87,6 +105,7 @@ def info_perfil(pagina, df, id_cliente, fecha_ini, fecha_fin):
 
         # Filtrar por el ID del cliente
     df_cliente = df[df['ID_Cliente'] == id_cliente]
+    df_cliente = df_cliente[df_cliente['Tipo'] == 'actual']
 
     labels = []
     valores = []
@@ -134,30 +153,43 @@ def info_anomalias(pagina, df, id_cliente, fecha_ini, fecha_fin):
 
     return labels, valores
 
-def lista_anomalias_cliente(df, cliente_id, fecha_inicio, fecha_fin, tipo):
+def lista_anomalias_cliente(df, cliente_id, fecha_inicio, fecha_fin, fecha_final_pronostico):
 
-    df_cliente = df[df['ID_Cliente'] == cliente_id]
-    df_cliente = df_cliente[(df_cliente['Fecha'] >= fecha_inicio) & (df_cliente['Fecha'] <= fecha_fin)]
-    df_cliente = df_cliente[df_cliente['Tipo'] == tipo]
-    df_cliente = df_cliente[df_cliente['Anomalies_final'] == 1]
+    x = df[df['ID_Cliente'] == cliente_id]
+    x['Fecha'] = x['Fecha'].sort_values()
 
-    # Verificar si el DataFrame está vacío después del filtrado
-    if df_cliente.empty:
-        return "No se encontraron anomalías en el rango de fechas."
+    fecha_final1 = pd.to_datetime(fecha_fin)
+    fecha_ini_pronostico = fecha_final1 + pd.Timedelta(days=1)
+    fecha_ini_pronostico_formatted = fecha_ini_pronostico.strftime('%Y/%m/%d')
 
-    # Ordenar por fecha en orden descendente y seleccionar las 10 más recientes
-    df_cliente = df_cliente.sort_values(by='Fecha', ascending=False).head(10)
+    df_actual = x[(x['Fecha'] >= fecha_inicio) & (x['Fecha'] <= fecha_fin)]
+    df_pronostico = x[(x['Fecha'] > fecha_ini_pronostico_formatted) & (x['Fecha'] < fecha_final_pronostico)]
+ 
+    df_actual = df_actual[df_actual['Anomalies_final'] == 1]
+    lista_anomalias_actual = []
+    if df_actual.empty:
+        lista_anomalias_actual.append("No se encontraron anomalías en el rango de fechas.") 
 
-    # Generar el texto para las anomalías
-    lista_anomalias = []
-    for _, row in df_cliente.iterrows():
+    df_actual = df_actual.sort_values(by='Fecha', ascending=False).head(10)
+    for _, row in df_actual.iterrows():
         anomalia_texto = f"Fecha y Hora: {row['Fecha']} Energia Activa: {row['Active_energy']}"
-        lista_anomalias.append(anomalia_texto)
+        lista_anomalias_actual.append(anomalia_texto)
+
+    df_pronostico = df_pronostico[df_pronostico['Anomalies_final'] == 1]  
+    lista_anomalias_pronostico = []
+    if df_pronostico.empty:
+        lista_anomalias_pronostico.append("No se encontraron anomalías en el rango de fechas.") 
+
+    df_pronostico = df_pronostico.sort_values(by='Fecha', ascending=True).head(10)
+    for _, row in df_pronostico.iterrows():
+        anomalia_texto = f"Fecha y Hora: {row['Fecha']} Energia Activa: {row['Active_energy']}"
+        lista_anomalias_pronostico.append(anomalia_texto)
 
     # Unir las anomalías en un solo texto separado por \n
-    texto_anomalias = "\n".join(lista_anomalias)
+    texto_anomalias_actual = "\n".join(lista_anomalias_actual)
+    texto_anomalias_pronostico  = "\n".join(lista_anomalias_pronostico)
 
-    return texto_anomalias
+    return texto_anomalias_actual, texto_anomalias_pronostico
 
 def plot_average_by_day_of_week(df, cliente_id, fecha_inicial, fecha_final, variable):
 
@@ -572,21 +604,37 @@ def plot_top_anomaly_clients(df, fecha_inicio, fecha_fin):
     return imagenes_base64
 
 
-def plot_anomalias_time_series(df, cliente_id, fecha_inicio, fecha_fin,variable):
-
+def plot_anomalias_time_series(df, cliente_id, fecha_inicio, fecha_fin, variable, fecha_final_pronostico, nivel_inicial, nivel_final):
     imagenes_base64 = ""
 
-    df['Fecha'] = pd.to_datetime(df['Fecha'])
-    plt.figure(figsize=(12, 8))
-    plt.plot(df['Fecha'], df[variable], color='blue', label=variable)
+    plt.figure(figsize=(10, 8))
+    x = df[df['ID_Cliente'] == cliente_id].copy()
+    x['Fecha'] = pd.to_datetime(x['Fecha'])
+    x = x.sort_values('Fecha')
 
-    anomalies = df[df['Anomalies_descriptive'] == 1]
-    plt.scatter(anomalies['Fecha'], anomalies[variable], color='red', label='Anomalías', zorder=5)
-    plt.ylabel(f'{variable}')
-    plt.title(f'Serie de Tiempo del Consumo de {variable}')
+    df_actual = x[(x['Fecha'] >= fecha_inicio) & (x['Fecha'] <= fecha_fin)]
+    df_actual = df_actual.sort_values('Fecha')
+    plt.plot(df_actual['Fecha'], df_actual[variable], color='blue', label='Actual')
+
+    df_pronostico = x[(x['Fecha'] > fecha_fin) & (x['Fecha'] < fecha_final_pronostico)]
+    df_pronostico = df_pronostico.sort_values('Fecha')
+    plt.plot(df_pronostico['Fecha'], df_pronostico[variable], color='green', label='Pronóstico')
+
+    limite_superior = int(nivel_final) / 100 + df_pronostico[variable]
+    limite_inferior = -int(nivel_inicial) / 100 + df_pronostico[variable]
+
+    anomalias_actual = df_actual[df_actual['Anomalies_final'] == 1]
+    anomalias_pronostico = df_pronostico[df_pronostico['Anomalies_final'] == 1]
+    plt.scatter(anomalias_actual['Fecha'], anomalias_actual[variable], color='red', label='Anomalía')
+    plt.scatter(anomalias_pronostico['Fecha'], anomalias_pronostico[variable], color='red')
+
+    plt.fill_between(df_pronostico['Fecha'], limite_inferior, limite_superior, color='orange', alpha=0.3, label='Límites')
+
+    plt.title('Serie Temporal de Anomalías y Pronostico')
+    plt.ylabel(variable)
     plt.legend()
-
     plt.xticks(rotation=45)
+    plt.grid(True)
 
     # Convertir la gráfica a base64
     buffer = io.BytesIO()
@@ -597,10 +645,11 @@ def plot_anomalias_time_series(df, cliente_id, fecha_inicio, fecha_fin,variable)
     # Añadir la imagen base64 a la lista
     imagenes_base64 = data_uri
 
-    # Limpiar la figura actual para la siguiente iteración
-    plt.clf()
+    return imagenes_base64
 
-    return imagenes_base64 
+
+
+
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -654,9 +703,7 @@ def submit_form():
         listas = {}
 
         if pagina == "index":
-            
-           
-           
+                    
            graficas['grafica1'] = plot_clientes_yoy_variance(df, '2021-01-01', '2023-03-31')
            graficas['grafica2'] = plot_total_and_yoy_variance_by_year(df, '2021-01-01', '2023-03-31' ,"Active_energy")
            graficas['grafica3'] = plot_total_and_yoy_variance_by_year(df, '2021-01-01', '2023-03-31' ,"Reactive_energy")
@@ -687,18 +734,18 @@ def submit_form():
             df_cliente = filtrar_cliente(df,id_cliente, fecha_inicial, fecha_final)
             tabla['labels'], tabla['valor']= info_anomalias(pagina, df, id_cliente, fecha_inicial, fecha_final)
 
-
             nivel_inicial = request.form['nivel_inicial']
             nivel_final = request.form['nivel_final']
             num_periodos = request.form['num_periodos']
-         
-
-            print(f'nivel_inicial : {nivel_inicial} nivel_final {nivel_final} periodos {num_periodos}')
-
-            graficas['grafica1'] = plot_anomalias_time_series(df_cliente,id_cliente, fecha_inicial, fecha_final, "Active_energy")
-            graficas['grafica2'] = plot_anomalias_time_series(df_cliente,id_cliente, fecha_inicial, fecha_final, "Reactive_energy")
-            listas['lista1'] = lista_anomalias_cliente(df_cliente,id_cliente, fecha_inicial, fecha_final, 'actual')
-            listas['lista2'] = lista_anomalias_cliente(df_cliente,id_cliente, fecha_inicial, fecha_final, 'pronostico')
+            fecha_final1 = pd.to_datetime(fecha_final)
+            num_periods = int(num_periodos)
+            fecha_final_pronostico = fecha_final1 + pd.Timedelta(days=num_periods)
+            fecha_final_pronostico_formatted = fecha_final_pronostico.strftime('%Y/%m/%d')
+           
+            graficas['grafica1'] = plot_anomalias_time_series(df,id_cliente, fecha_inicial, fecha_final, "Active_energy", fecha_final_pronostico_formatted,nivel_inicial,nivel_final)           
+            graficas['grafica2'] = plot_anomalias_time_series(df,id_cliente, fecha_inicial, fecha_final, "Reactive_energy", fecha_final_pronostico_formatted,nivel_inicial,nivel_final)
+            
+            listas['lista1'], listas['lista2'] = lista_anomalias_cliente(df,id_cliente, fecha_inicial, fecha_final, fecha_final_pronostico_formatted)
         else:
             print("otro")
 
