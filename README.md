@@ -63,16 +63,14 @@ El tablero de control tiene como objetivo el análisis y detección de anomalía
 ## Repositorio
 
 ### Carpetas
-- informes: Prototipo Fachada, Tabla se requerimientos, Desarrollo y Prueba de los Modelos, Validación del prototipo con base en los requerimientos y Manual de Usuario
-- src: Jupyter Notebooks
-- satatics: Imagenes, versión minimizada del archivo de CSS de Bootstrap, versión minimizada del archivo JavaScript de jQuery, archivo JavaScript personalizado y archivo CSS personalizado
-- templates: Plantilas Html de cada pagina
+•	informes: Prototipo Fachada, Tabla se requerimientos, Desarrollo y Prueba de los Modelos, Validación del prototipo con base en los requerimientos y Manual de Usuario
+•	src: Jupyter Notebooks
+•	satatics: imágenes, versión minimizada del archivo de CSS de Bootstrap, versión minimizada del archivo JavaScript de jQuery, archivo JavaScript personalizado y archivo CSS personalizado
+•	templates: Plantillas HTML de cada pagina
 
 ### Ejecución
-Puedes ejecutar el codigo desde sitios como (Google Colab, Jupiter Notebook o VSC)
-una vez escojas el ambiente donde vas a desplegar asegurate de usar una version de python superior a la 3.5
-
-para verificar la version puedes ejecutar el siguiente comando:
+Puedes ejecutar el código desde sitios como (Google Colab, Jupiter Notebook o VSC) una vez escojas el ambiente donde vas a desplegar asegúrate de usar una versión de python superior a la 3.5
+para verificar la versión puedes ejecutar el siguiente comando:
 
 ```bash
 !python --version
@@ -83,8 +81,10 @@ una vez tengas la versión nesesaria installa las siguientes dependencias como s
 ```bash
 !pip install -r requirements.txt
 ```
-Apartir de acá ya puedes ejecutar el notebook y probar la aplicación
 
+A partir de acá ya puedes ejecutar la aplicación C:\Projects\Anomalias>Python app.py
+
+Abre tu navegador y copia el siguiente enlace: http://127.0.0.1:5000
 
 ## Requerimientos Técnicos
 * Linux or macOS or Windows
