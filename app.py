@@ -130,7 +130,7 @@ def info_perfil(pagina, df, id_cliente, fecha_ini, fecha_fin):
     return labels, valores
 
 
-def info_anomalias(pagina, df, id_cliente, fecha_ini, fecha_fin):
+def info_anomalias(pagina, df, id_cliente, fecha_ini, fecha_fin,fecha_final_pronostico):
 
     df_cliente = df[df['ID_Cliente'] == id_cliente]
     df_cliente = df_cliente[(df_cliente['Fecha'] >= fecha_ini) & (df_cliente['Fecha'] <= fecha_fin)]
@@ -145,7 +145,7 @@ def info_anomalias(pagina, df, id_cliente, fecha_ini, fecha_fin):
     
     rank_anomalias = obtener_posicion_ranking_anomalias(df, id_cliente, fecha_ini, fecha_fin,'actual')
     anomalias_actuales = obtener_numero_anomalias(df, id_cliente, fecha_ini, fecha_fin, 'actual')
-    anomalias_pronosticadas = obtener_numero_anomalias(df, id_cliente, fecha_ini, fecha_fin, 'pronostico')
+    anomalias_pronosticadas = obtener_numero_anomalias(df, id_cliente, fecha_fin, fecha_final_pronostico, 'pronostico')
 
     # Agregar los labels y valores a las listas correspondientes
     labels.extend(['Sector', 'Total Energía Activa', 'Total Energía Reactiva', 'Posición Ranking Anomalías', 'Cantidad de anomalías detectadas actuales', 'Cantidad de anomalías detectadas proyectadas'])
@@ -730,9 +730,10 @@ def submit_form():
 
         elif pagina == "anomalias":
 
+
             id_cliente = request.form['cliente']
             df_cliente = filtrar_cliente(df,id_cliente, fecha_inicial, fecha_final)
-            tabla['labels'], tabla['valor']= info_anomalias(pagina, df, id_cliente, fecha_inicial, fecha_final)
+
 
             nivel_inicial = request.form['nivel_inicial']
             nivel_final = request.form['nivel_final']
@@ -741,6 +742,7 @@ def submit_form():
             num_periods = int(num_periodos)
             fecha_final_pronostico = fecha_final1 + pd.Timedelta(days=num_periods)
             fecha_final_pronostico_formatted = fecha_final_pronostico.strftime('%Y/%m/%d')
+            tabla['labels'], tabla['valor']= info_anomalias(pagina, df, id_cliente, fecha_inicial, fecha_final,fecha_final_pronostico_formatted)
            
             graficas['grafica1'] = plot_anomalias_time_series(df,id_cliente, fecha_inicial, fecha_final, "Active_energy", fecha_final_pronostico_formatted,nivel_inicial,nivel_final)           
             graficas['grafica2'] = plot_anomalias_time_series(df,id_cliente, fecha_inicial, fecha_final, "Reactive_energy", fecha_final_pronostico_formatted,nivel_inicial,nivel_final)
